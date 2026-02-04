@@ -26,5 +26,8 @@
     "confirm": "تأكيد",
     "delete_confirmation_description": "لا يمكن التراجع عن هذا الإجراء.",
     "yes": "نعم",
-    "no": "لا"
+    "no": "لا",
+    "please_input": "يرجى الإدخال",
+    "cancel": "إلغاء",
+    "submit": "إرسال"
 }

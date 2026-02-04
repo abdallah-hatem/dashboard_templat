@@ -26,5 +26,8 @@
     "confirm": "Confirm",
     "delete_confirmation_description": "This action cannot be undone.",
     "yes": "Yes",
-    "no": "No"
+    "no": "No",
+    "please_input": "Please input",
+    "cancel": "Cancel",
+    "submit": "Submit"
 }
