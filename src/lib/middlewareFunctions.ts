@@ -42,17 +42,17 @@ export function addCspHeaders(response: NextResponse) {
     `style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://fonts.gstatic.com`,
     `font-src 'self' data: https://fonts.googleapis.com https://fonts.gstatic.com`,
     isDevelopment
-      ? `script-src 'self' 'unsafe-eval' 'unsafe-inline' 'nonce-${nonce}' https://www.google.com https://www.gstatic.com https://apis.google.com https://www.recaptcha.net https://maps.googleapis.com https://maps.gstatic.com https://sandbox.di.gov.eg https://login.di.gov.eg`
-      : `script-src 'self' 'unsafe-inline' 'nonce-${nonce}' https://www.google.com https://www.gstatic.com https://apis.google.com https://www.recaptcha.net https://maps.googleapis.com https://maps.gstatic.com https://sandbox.di.gov.eg https://login.di.gov.eg`,
-    `connect-src 'self' https://api.realestate.gov.eg https://egypt.mlsmatrix.com https://mlsmatrix.com https://invest-api.esystematic.org https://sandbox.di.gov.eg https://login.di.gov.eg https://www.googleapis.com https://maps.googleapis.com https://maps.gstatic.com https://securetoken.googleapis.com https://identitytoolkit.googleapis.com https://www.gstatic.com https://apis.google.com https://*.firebaseapp.com https://flagcdn.com https://www.google.com https://www.recaptcha.net${isDevelopment ? " ws: wss:" : ""
+      ? `script-src 'self' 'unsafe-eval' 'unsafe-inline' 'nonce-${nonce}' `
+      : `script-src 'self' 'unsafe-inline' 'nonce-${nonce}' `,
+    `connect-src 'self' ${isDevelopment ? " ws: wss:" : ""
     }`,
-    `img-src 'self' data: blob: https://www.google.com https://maps.googleapis.com https://maps.gstatic.com https://api.realestate.gov.eg https://egypt.mlsmatrix.com https://mlsmatrix.com https://invest-api.esystematic.org https://lh3.googleusercontent.com https://mt.googleapis.com https://flagcdn.com`,
-    `frame-src 'self' https://sandbox.di.gov.eg https://login.di.gov.eg https://www.google.com https://accounts.google.com https://*.firebaseapp.com https://*.google.com https://*.gstatic.com https://www.recaptcha.net https://www.gstatic.com https://www.youtube.com https://youtube.com https://www.youtube-nocookie.com`,
+    `img-src 'self' `,
+    `frame-src 'self' `,
     `frame-ancestors 'none'`,
     `object-src 'none'`,
     `base-uri 'self'`,
-    `form-action 'self' https://sandbox.di.gov.eg https://login.di.gov.eg`,
-    `navigate-to 'self' https://invest-api.esystematic.org https://hfa-reservation.esystematic.org https://sandbox.di.gov.eg https://login.di.gov.eg https://www.googleapis.com https://accounts.google.com`,
+    `form-action 'self' `,
+    `navigate-to 'self' `,
     ...(isDevelopment ? [] : [`upgrade-insecure-requests`]),
   ].join("; ");
 
