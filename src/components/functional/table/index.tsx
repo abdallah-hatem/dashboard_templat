@@ -37,8 +37,6 @@ export interface IAction {
 }
 
 export interface ITableProps<T = any> {
-  onResetFilter?: () => void;
-  onApplyFilter?: (filter: any) => void;
   columns: ColumnsType<T>;
   dataSource?: T[];
   loading?: boolean;
@@ -72,9 +70,6 @@ export interface ITableProps<T = any> {
   createButtonHref?: string;
   searchValue?: string;
   onSearchChange?: (value: string) => void;
-  canCreate?: boolean;
-  canUpdate?: boolean;
-  canDelete?: boolean;
   formRefAdd?: FormInstance;
   formRefEdit?: FormInstance;
   sortable?: boolean;
@@ -83,32 +78,7 @@ export interface ITableProps<T = any> {
     sort_by?: string;
     sort?: "asc" | "desc";
   };
-  showStatusFilter?: boolean;
-  statuses?: string[];
-  selectedStatus?: string | null;
-  onStatusSelect?: (status: string | null) => void;
-  // Combined tabbed filter
-  showTabbedFilter?: boolean;
-  projectNames?: Array<{ id: number; name: string }>;
-  onProjectSelect?: (projectId: string | null) => void;
-  projectTypes?: string[];
-  onProjectTypeSelect?: (projectType: string | null) => void;
   hideSearch?: boolean;
-  // Date range filter props
-  showDateFilter?: boolean;
-  startDate?: string;
-  endDate?: string;
-  onDateRangeChange?: (
-    startDate: string | null,
-    endDate: string | null,
-  ) => void;
-  onPdfDownload?: (data?: any) => void;
-  topBarChildren?: React.ReactNode | React.ReactNode[];
-  showCountOnly?: boolean;
-  tabsGeneric?: any[];
-  FilterDropdown?: boolean;
-  dropDownOptions?: any;
-  showExport?: boolean;
   onCreateRef?: React.MutableRefObject<(() => void) | null>;
   genericFilters?: GenericFilterProps[];
   rowSelection?: TableProps<T>["rowSelection"];
@@ -116,8 +86,6 @@ export interface ITableProps<T = any> {
   emptyStateTitle?: string;
   emptyStateDescription?: string;
   emptyStateIcon?: React.ReactNode;
-  advancedFilters?: React.ReactNode;
-  hasFilters?: boolean;
   searchPlaceholder?: string;
   searchStyleTw?: string;
 }
@@ -268,7 +236,6 @@ const Table = <T extends object>({
   const tableColumns = [...enhancedColumns];
   if (allActions.length > 0) {
     tableColumns.push({
-      // title: t("actions"),
       title: "",
       key: "actions",
       fixed: isRTL ? "left" : "right",
@@ -279,28 +246,6 @@ const Table = <T extends object>({
         </div>
       ),
     });
-  }
-
-  // Configure pagination
-  let paginationConfig: TableProps<T>["pagination"];
-
-  if (pagination === false) {
-    paginationConfig = false;
-  } else if (serverPagination) {
-    paginationConfig = {
-      current: currentPage,
-      pageSize: pageSize,
-      total: total,
-      onChange: onPageChange,
-      showSizeChanger: true,
-      ...(pagination || {}),
-    };
-  } else {
-    paginationConfig = {
-      pageSize: pageSize,
-      showSizeChanger: false,
-      ...(pagination || {}),
-    };
   }
 
   const handleCreate = () => {
@@ -320,7 +265,7 @@ const Table = <T extends object>({
 
   return (
     <div className="w-full">
-      {/* Header with title, search, and add button */}
+      {/* Header with search and generic filters */}
       {(title || searchable || addButton || genericFilters) && (
         <TopBar
           searchStyleTw={searchStyleTw}
@@ -332,9 +277,9 @@ const Table = <T extends object>({
         />
       )}
 
-      {/* Table or Grid View or Empty State */}
+      {/* Table or Empty State */}
       <Spin spinning={loading}>
-        <div className={`${"custom-shadow rounded-[5px] bg-white p-[20px]"}`}>
+        <div className="custom-shadow rounded-[5px] bg-white p-[20px]">
           {dataSource && dataSource.length > 0 ? (
             <AntTable
               columns={isRTL ? tableColumns.reverse() : tableColumns}

@@ -96,6 +96,14 @@ const demoData = [
     is_master: false,
     phone: "5554862739",
     address: "753 Suburban Lane, Suburbs",
+  }, {
+    id: 11,
+    name: "Suburban Branch",
+    listing_count: 24,
+    agents_count: 7,
+    is_master: false,
+    phone: "5554862739",
+    address: "753 Suburban Lane, Suburbs",
   },
 ];
 

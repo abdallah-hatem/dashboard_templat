@@ -29,5 +29,9 @@
     "no": "No",
     "please_input": "Please input",
     "cancel": "Cancel",
-    "submit": "Submit"
+    "submit": "Submit",
+    "showing": "Showing",
+    "to": "to",
+    "from": "from",
+    "of": "of"
 }

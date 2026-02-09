@@ -81,7 +81,7 @@ export default function TestClient({ data, meta }: TestsClientProps) {
             const params = new URLSearchParams(searchParams.toString());
             params.set("page", page.toString());
 
-            router.replace(`/branches?${params.toString()}`, { scroll: false });
+            router.replace(`/test?${params.toString()}`, { scroll: false });
           },
         }}
         emptyStateTitle={"branches_title"}
