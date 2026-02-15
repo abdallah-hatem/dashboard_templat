@@ -44,8 +44,7 @@ export function addCspHeaders(response: NextResponse) {
     isDevelopment
       ? `script-src 'self' 'unsafe-eval' 'unsafe-inline' 'nonce-${nonce}' `
       : `script-src 'self' 'unsafe-inline' 'nonce-${nonce}' `,
-    `connect-src 'self' ${isDevelopment ? " ws: wss:" : ""
-    }`,
+    `connect-src 'self' ${isDevelopment ? " ws: wss:" : ""}`,
     `img-src 'self' `,
     `frame-src 'self' `,
     `frame-ancestors 'none'`,
@@ -66,7 +65,7 @@ export function addCspHeaders(response: NextResponse) {
   response.headers.set("Referrer-Policy", "strict-origin-when-cross-origin");
   response.headers.set(
     "Permissions-Policy",
-    "camera=(), microphone=(), geolocation=()"
+    "camera=(), microphone=(), geolocation=()",
   );
 
   return response;
@@ -83,16 +82,23 @@ export function checkAuthentication(request: any) {
   const locale = pathname.split("/")[1];
 
   // Define public routes that don't require authentication
-  const publicRoutes = ["/login", "/reset-password", "/verify-login", "/register"];
+  const publicRoutes = [
+    "/login",
+    "/reset-password",
+    "/verify-login",
+    "/register",
+  ];
 
   // Check if current path (without locale) is a public route
   const pathWithoutLocale = pathname.replace(/^\/(en|ar)/, "") || "/";
   const isPublicRoute = publicRoutes.some((route) =>
-    pathWithoutLocale.startsWith(route)
+    pathWithoutLocale.startsWith(route),
   );
 
   // Check for authentication token in cookies
-  const authToken = request.cookies.get("token")?.value;
+  const authToken = request.cookies.get(
+    process.env.AUTH_TOKEN_KEY || "token",
+  )?.value;
 
   // If user is authenticated and tries to access a public route, redirect to home
   if (authToken && isPublicRoute) {
@@ -116,5 +122,3 @@ export function checkAuthentication(request: any) {
   // User is authenticated and on a protected route, allow access
   return null;
 }
-
-

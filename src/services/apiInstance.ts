@@ -38,7 +38,7 @@ export async function apiFetch(
     params?: Record<string, string | string[] | undefined>;
     revalidateTags?: string[];
     ignore401Redirect?: boolean;
-  } = {}
+  } = {},
 ) {
   const baseURL = process.env.BASE_URL!;
 
@@ -46,12 +46,15 @@ export async function apiFetch(
   let fullUrl = baseURL + url;
   if (options.params) {
     const queryString = new URLSearchParams(
-      Object.entries(options.params).reduce((acc, [key, value]) => {
-        if (value !== undefined) {
-          acc[key] = Array.isArray(value) ? value.join(",") : value;
-        }
-        return acc;
-      }, {} as Record<string, string>)
+      Object.entries(options.params).reduce(
+        (acc, [key, value]) => {
+          if (value !== undefined) {
+            acc[key] = Array.isArray(value) ? value.join(",") : value;
+          }
+          return acc;
+        },
+        {} as Record<string, string>,
+      ),
     ).toString();
 
     if (queryString) {
@@ -75,7 +78,7 @@ export async function apiFetch(
   }
 
   const cookieStore = await cookies();
-  const token = cookieStore.get("token")?.value;
+  const token = cookieStore.get(process.env.AUTH_TOKEN_KEY || "token")?.value;
   const lang = cookieStore.get("lang")?.value || "ar";
 
   if (includeAuth && token) headers["Authorization"] = `Bearer ${token}`;
